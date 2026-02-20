@@ -1,7 +1,14 @@
-{% liquid
-  assign tz = trmnl.user.time_zone_iana
-  assign utc_offset_seconds = trmnl.user.utc_offset | default: 0
-%}
+{% if testing_date and testing_date != '' %}
+    {%- assign todays_date = testing_date -%}
+{% else %}
+    {%- assign todays_date = trmnl.system.timestamp_utc | date: "%Y-%m-%d" -%}
+{% endif %}
+{%- assign today_timestamp = todays_date | date: "%s" | plus: trmnl.user.utc_offset -%}
+{%- assign today_date = today_timestamp | date: "%Y-%m-%d" -%}
+{%- assign day_of_week = today_timestamp | date: "%A" -%}
+{%- assign month = today_timestamp | date: "%b" -%}
+{%- assign day_of_month = today_timestamp | date: "%d" -%}
+
 
 <style>
   /* FLIP DATE — Date display plugin with flip-clock aesthetic */
@@ -150,54 +157,3 @@
     width: 100%;
   }
 </style>
-
-<script>
-  (function() {
-    // Get date in user's timezone
-    function getDateParts(tzIANA, utcOffsetSeconds) {
-      let date;
-
-      if (tzIANA && tzIANA !== '""') {
-        // Use Intl API for proper timezone handling
-        const formatter = new Intl.DateTimeFormat('en-US', {
-          timeZone: tzIANA,
-          year: 'numeric',
-          month: 'short',
-          day: 'numeric',
-          weekday: 'long',
-        });
-        const parts = formatter.formatToParts(new Date());
-        const partMap = {};
-        parts.forEach(p => {
-          partMap[p.type] = p.value;
-        });
-        return {
-          dayOfWeek: partMap.weekday.toUpperCase(),
-          day: partMap.day.padStart(2, '0'),
-          month: partMap.month.toUpperCase(),
-        };
-      }
-
-      // Fallback: use UTC offset
-      const now = new Date();
-      const offsetMs = utcOffsetSeconds * 1000;
-      const localTime = new Date(now.getTime() + offsetMs);
-
-      const dayNames = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
-      const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-
-      return {
-        dayOfWeek: dayNames[localTime.getUTCDay()],
-        day: String(localTime.getUTCDate()).padStart(2, '0'),
-        month: monthNames[localTime.getUTCMonth()],
-      };
-    }
-
-    // Expose globally
-    window.getFlipDateParts = function() {
-      const tz = '{{ tz | default: "" }}';
-      const offset = parseInt('{{ utc_offset_seconds }}', 10) || 0;
-      return getDateParts(tz, offset);
-    };
-  })();
-</script>
