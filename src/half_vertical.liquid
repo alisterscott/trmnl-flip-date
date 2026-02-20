@@ -1,0 +1,25 @@
+{% render 'shared' %}
+
+<div class="fdp">
+  <div class="fdp-container">
+    <div class="fdp-half-vert" id="fdp-root">
+      <div class="fdp-tile fdp-number"></div>
+      <div class="fdp-tile fdp-month"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function renderHalfVertical() {
+    const parts = window.getFlipDateParts();
+
+    document.querySelector('.fdp-number').textContent = parts.day;
+    document.querySelector('.fdp-month').textContent = parts.month;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderHalfVertical);
+  } else {
+    renderHalfVertical();
+  }
+</script>

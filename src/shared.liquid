@@ -1,0 +1,203 @@
+{% liquid
+  assign tz = trmnl.user.time_zone_iana
+  assign utc_offset_seconds = trmnl.user.utc_offset | default: 0
+%}
+
+<style>
+  /* FLIP DATE — Date display plugin with flip-clock aesthetic */
+  .fdp {
+    width: 100%;
+    height: 100%;
+    background: var(--fdp-bg, #fff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-family: 'Inter', 'system-ui', 'Arial', sans-serif;
+  }
+
+  .fdp-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--fdp-pad, 20px);
+    box-sizing: border-box;
+  }
+
+  /* Tile styling - flip clock aesthetic */
+  .fdp-tile {
+    background: var(--fdp-tile-bg, #000);
+    border: var(--fdp-tile-border, 4px solid #ccc);
+    border-radius: var(--fdp-tile-radius, 12px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fdp-tile-text, #fff);
+    font-weight: 900;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Seam effect (like flip clock seam) */
+  .fdp-tile::before {
+    content: '';
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 50%;
+    height: 2px;
+    background: var(--fdp-seam, #555);
+    z-index: 10;
+  }
+
+  .fdp-tile::after {
+    content: '';
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: calc(50% + 2px);
+    height: 1px;
+    background: var(--fdp-seam-shadow, #222);
+    z-index: 9;
+  }
+
+  /* Text styling */
+  .fdp-number {
+    font-size: clamp(3rem, 12vw, 12rem);
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+
+  .fdp-text {
+    font-size: clamp(1.5rem, 6vw, 6rem);
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+  }
+
+  /* Full layout */
+  .fdp-full {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--fdp-gap, 12px);
+    width: 100%;
+    height: 100%;
+  }
+
+  .fdp-full .fdp-dayofweek {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .fdp-full .fdp-number {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .fdp-full .fdp-month {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  /* Half horizontal layout */
+  .fdp-half-horiz {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--fdp-gap, 12px);
+    width: 100%;
+    height: 100%;
+  }
+
+  .fdp-half-horiz .fdp-number {
+    grid-column: 1;
+  }
+
+  .fdp-half-horiz .fdp-month {
+    grid-column: 2;
+  }
+
+  /* Half vertical layout */
+  .fdp-half-vert {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: var(--fdp-gap, 12px);
+    width: 100%;
+    height: 100%;
+  }
+
+  .fdp-half-vert .fdp-number {
+    grid-row: 1;
+  }
+
+  .fdp-half-vert .fdp-month {
+    grid-row: 2;
+  }
+
+  /* Quadrant layout */
+  .fdp-quadrant {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  .fdp-quadrant .fdp-number {
+    width: 100%;
+  }
+</style>
+
+<script>
+  (function() {
+    // Get date in user's timezone
+    function getDateParts(tzIANA, utcOffsetSeconds) {
+      let date;
+
+      if (tzIANA && tzIANA !== '""') {
+        // Use Intl API for proper timezone handling
+        const formatter = new Intl.DateTimeFormat('en-US', {
+          timeZone: tzIANA,
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          weekday: 'long',
+        });
+        const parts = formatter.formatToParts(new Date());
+        const partMap = {};
+        parts.forEach(p => {
+          partMap[p.type] = p.value;
+        });
+        return {
+          dayOfWeek: partMap.weekday.toUpperCase(),
+          day: partMap.day.padStart(2, '0'),
+          month: partMap.month.toUpperCase(),
+        };
+      }
+
+      // Fallback: use UTC offset
+      const now = new Date();
+      const offsetMs = utcOffsetSeconds * 1000;
+      const localTime = new Date(now.getTime() + offsetMs);
+
+      const dayNames = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+      const monthNames = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+      return {
+        dayOfWeek: dayNames[localTime.getUTCDay()],
+        day: String(localTime.getUTCDate()).padStart(2, '0'),
+        month: monthNames[localTime.getUTCMonth()],
+      };
+    }
+
+    // Expose globally
+    window.getFlipDateParts = function() {
+      const tz = '{{ tz | default: "" }}';
+      const offset = parseInt('{{ utc_offset_seconds }}', 10) || 0;
+      return getDateParts(tz, offset);
+    };
+  })();
+</script>

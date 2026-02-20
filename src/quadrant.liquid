@@ -1,0 +1,23 @@
+{% render 'shared' %}
+
+<div class="fdp">
+  <div class="fdp-container">
+    <div class="fdp-quadrant" id="fdp-root">
+      <div class="fdp-tile fdp-number"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function renderQuadrant() {
+    const parts = window.getFlipDateParts();
+
+    document.querySelector('.fdp-number').textContent = parts.day;
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', renderQuadrant);
+  } else {
+    renderQuadrant();
+  }
+</script>
