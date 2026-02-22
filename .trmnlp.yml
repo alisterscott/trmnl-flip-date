@@ -1,0 +1,15 @@
+---
+# auto-reload when files change (`watch: false` to disable)
+watch:
+  - src
+  - .trmnlp.yml
+
+# Time zone IANA identifier to inject into trmnl.user; see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+time_zone: Australia/Brisbane
+
+override variables:
+variables:
+  trmnl:
+    user:
+      locale: "en"
+  testing_date: ""

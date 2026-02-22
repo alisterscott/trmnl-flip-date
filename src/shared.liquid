@@ -1,0 +1,140 @@
+{% if testing_date and testing_date != '' %}
+    {%- assign todays_date = testing_date -%}
+{% else %}
+    {%- assign todays_date = trmnl.system.timestamp_utc | date: "%Y-%m-%d" -%}
+{% endif %}
+{%- assign today_timestamp = todays_date | date: "%s" | plus: trmnl.user.utc_offset -%}
+{%- assign today_date = today_timestamp | date: "%Y-%m-%d" -%}
+{%- assign day_of_month = today_timestamp | date: "%d" -%}
+{%- assign dow_index = today_timestamp | date: "%u" | plus: 0 | minus: 1 -%}
+{%- assign month_index = today_timestamp | date: "%m" | plus: 0 | minus: 1 -%}
+
+{%- assign locale = trmnl.user.locale | default: "en" -%}
+{%- if locale == "da" -%}
+  {%- assign locale_days = "Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Søndag" -%}
+  {%- assign locale_months = "Jan|Feb|Mar|Apr|Maj|Jun|Jul|Aug|Sep|Okt|Nov|Dec" -%}
+{%- elsif locale == "de" or locale == "de-AT" -%}
+  {%- assign locale_days = "Montag|Dienstag|Mittwoch|Donnerstag|Freitag|Samstag|Sonntag" -%}
+  {%- assign locale_months = "Jan|Feb|Mär|Apr|Mai|Jun|Jul|Aug|Sep|Okt|Nov|Dez" -%}
+{%- elsif locale == "es-ES" -%}
+  {%- assign locale_days = "Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo" -%}
+  {%- assign locale_months = "Ene|Feb|Mar|Abr|May|Jun|Jul|Ago|Sep|Oct|Nov|Dic" -%}
+{%- elsif locale == "fr" -%}
+  {%- assign locale_days = "Lundi|Mardi|Mercredi|Jeudi|Vendredi|Samedi|Dimanche" -%}
+  {%- assign locale_months = "Jan|Fév|Mar|Avr|Mai|Jun|Jul|Aoû|Sep|Oct|Nov|Déc" -%}
+{%- elsif locale == "he" -%}
+  {%- assign locale_days = "יום שני|יום שלישי|יום רביעי|יום חמישי|יום שישי|שבת|יום ראשון" -%}
+  {%- assign locale_months = "ינו׳|פבר׳|מרץ|אפר׳|מאי|יוני|יולי|אוג׳|ספט׳|אוק׳|נוב׳|דצמ׳" -%}
+{%- elsif locale == "hu" -%}
+  {%- assign locale_days = "Hétfő|Kedd|Szerda|Csütörtök|Péntek|Szombat|Vasárnap" -%}
+  {%- assign locale_months = "Jan|Feb|Már|Ápr|Máj|Jún|Júl|Aug|Szep|Okt|Nov|Dec" -%}
+{%- elsif locale == "id" -%}
+  {%- assign locale_days = "Senin|Selasa|Rabu|Kamis|Jumat|Sabtu|Minggu" -%}
+  {%- assign locale_months = "Jan|Feb|Mar|Apr|Mei|Jun|Jul|Agt|Sep|Okt|Nov|Des" -%}
+{%- elsif locale == "is" -%}
+  {%- assign locale_days = "Mánudagur|Þriðjudagur|Miðvikudagur|Fimmtudagur|Föstudagur|Laugardagur|Sunnudagur" -%}
+  {%- assign locale_months = "Jan|Feb|Mar|Apr|Maí|Jún|Júl|Ágú|Sep|Okt|Nóv|Des" -%}
+{%- elsif locale == "it" -%}
+  {%- assign locale_days = "Lunedì|Martedì|Mercoledì|Giovedì|Venerdì|Sabato|Domenica" -%}
+  {%- assign locale_months = "Gen|Feb|Mar|Apr|Mag|Giu|Lug|Ago|Set|Ott|Nov|Dic" -%}
+{%- elsif locale == "ja" -%}
+  {%- assign locale_days = "月曜日|火曜日|水曜日|木曜日|金曜日|土曜日|日曜日" -%}
+  {%- assign locale_months = "1月|2月|3月|4月|5月|6月|7月|8月|9月|10月|11月|12月" -%}
+{%- elsif locale == "ko" -%}
+  {%- assign locale_days = "월요일|화요일|수요일|목요일|금요일|토요일|일요일" -%}
+  {%- assign locale_months = "1월|2월|3월|4월|5월|6월|7월|8월|9월|10월|11월|12월" -%}
+{%- elsif locale == "nl" -%}
+  {%- assign locale_days = "Maandag|Dinsdag|Woensdag|Donderdag|Vrijdag|Zaterdag|Zondag" -%}
+  {%- assign locale_months = "Jan|Feb|Mrt|Apr|Mei|Jun|Jul|Aug|Sep|Okt|Nov|Dec" -%}
+{%- elsif locale == "no" -%}
+  {%- assign locale_days = "Mandag|Tirsdag|Onsdag|Torsdag|Fredag|Lørdag|Søndag" -%}
+  {%- assign locale_months = "Jan|Feb|Mar|Apr|Mai|Jun|Jul|Aug|Sep|Okt|Nov|Des" -%}
+{%- elsif locale == "pl" -%}
+  {%- assign locale_days = "Poniedziałek|Wtorek|Środa|Czwartek|Piątek|Sobota|Niedziela" -%}
+  {%- assign locale_months = "Sty|Lut|Mar|Kwi|Maj|Cze|Lip|Sie|Wrz|Paź|Lis|Gru" -%}
+{%- elsif locale == "pt-BR" -%}
+  {%- assign locale_days = "Segunda-feira|Terça-feira|Quarta-feira|Quinta-feira|Sexta-feira|Sábado|Domingo" -%}
+  {%- assign locale_months = "Jan|Fev|Mar|Abr|Mai|Jun|Jul|Ago|Set|Out|Nov|Dez" -%}
+{%- elsif locale == "ru" -%}
+  {%- assign locale_days = "Понедельник|Вторник|Среда|Четверг|Пятница|Суббота|Воскресенье" -%}
+  {%- assign locale_months = "Янв|Фев|Мар|Апр|Май|Июн|Июл|Авг|Сен|Окт|Ноя|Дек" -%}
+{%- elsif locale == "sk" -%}
+  {%- assign locale_days = "Pondelok|Utorok|Streda|Štvrtok|Piatok|Sobota|Nedeľa" -%}
+  {%- assign locale_months = "Jan|Feb|Mar|Apr|Máj|Jún|Júl|Aug|Sep|Okt|Nov|Dec" -%}
+{%- elsif locale == "sv" -%}
+  {%- assign locale_days = "Måndag|Tisdag|Onsdag|Torsdag|Fredag|Lördag|Söndag" -%}
+  {%- assign locale_months = "Jan|Feb|Mar|Apr|Maj|Jun|Jul|Aug|Sep|Okt|Nov|Dec" -%}
+{%- elsif locale == "uk" -%}
+  {%- assign locale_days = "Понеділок|Вівторок|Середа|Четвер|П'ятниця|Субота|Неділя" -%}
+  {%- assign locale_months = "Січ|Лют|Бер|Кві|Тра|Чер|Лип|Сер|Вер|Жов|Лис|Гру" -%}
+{%- elsif locale == "zh-CN" -%}
+  {%- assign locale_days = "星期一|星期二|星期三|星期四|星期五|星期六|星期日" -%}
+  {%- assign locale_months = "一月|二月|三月|四月|五月|六月|七月|八月|九月|十月|十一月|十二月" -%}
+{%- elsif locale == "zh-HK" -%}
+  {%- assign locale_days = "星期一|星期二|星期三|星期四|星期五|星期六|星期日" -%}
+  {%- assign locale_months = "一月|二月|三月|四月|五月|六月|七月|八月|九月|十月|十一月|十二月" -%}
+{%- else -%}
+  {%- assign locale_days = "Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday" -%}
+  {%- assign locale_months = "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec" -%}
+{%- endif -%}
+{%- assign locale_days_arr = locale_days | split: "|" -%}
+{%- assign locale_months_arr = locale_months | split: "|" -%}
+{%- assign day_of_week = locale_days_arr[dow_index] -%}
+{%- assign month = locale_months_arr[month_index] -%}
+
+
+<style>
+  /* Tile styling - flip clock aesthetic */
+  .fdp-tile {
+    border: var(--fdp-tile-border, 4px solid #ccc);
+    font-weight: 800;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Seam effect (like flip clock seam) */
+  .fdp-tile::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    height: 2px;
+    background: var(--fdp-seam, #555);
+    z-index: 10;
+  }
+
+  .fdp-tile::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(50% + 2px);
+    height: 1px;
+    background: var(--fdp-seam-shadow, #222);
+    z-index: 9;
+  }
+
+  /* Text styling */
+  .fdp-number, .fdp-text {
+    font-family: 'Inter', 'system-ui', 'Arial', sans-serif;
+    font-size: clamp(2rem, 18vw, 14rem);
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .fdp-text--md {
+    font-size: clamp(1.5rem, 13vw, 9rem);
+  }
+
+  .fdp-text--sm {
+    font-size: clamp(1rem, 9vw, 6rem);
+  }
+
+  /* Equal-height rows for stacked grid layouts */
+  .fdp-equal-rows {
+    grid-template-rows: 1fr 1fr;
+    grid-auto-rows: 1fr;
+  }
+</style>
