@@ -11,5 +11,5 @@ override variables:
 variables:
   trmnl:
     user:
-      locale: "fr"
+      locale: "en"
   testing_date: ""
