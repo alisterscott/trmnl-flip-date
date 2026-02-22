@@ -1,5 +1,9 @@
 # trmnl-flip-date
 
+A retro inspired flip date clock, with internationalisation support. Built for the TRMNL device.
+
+![screenshot](./media/screen.png)
+
 ## Setup
 
 1. `brew install rbenv`
