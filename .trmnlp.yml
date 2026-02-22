@@ -9,4 +9,7 @@ time_zone: Australia/Brisbane
 
 override variables:
 variables:
+  trmnl:
+    user:
+      locale: "fr"
   testing_date: ""
