@@ -2,7 +2,9 @@ import { test, expect } from "@playwright/test";
 import fs from "fs";
 import path from "path";
 
-test("can see a flip date for a given date in English", async ({ page }) => {
+test("can see a standard sized flip date for a given date in English", async ({
+  page,
+}) => {
   const sourceFile = path.join(__dirname, "english.trmnlp.yml");
   const destFile = path.join(__dirname, "..", ".trmnlp.yml");
 
@@ -46,7 +48,9 @@ test("can see a flip date for a given date in English", async ({ page }) => {
   }
 });
 
-test("can see a flip date for a given date in French", async ({ page }) => {
+test("can see a compact flip date for a given date in French", async ({
+  page,
+}) => {
   const sourceFile = path.join(__dirname, "fr.trmnlp.yml");
   const destFile = path.join(__dirname, "..", ".trmnlp.yml");
 
@@ -70,19 +74,16 @@ test("can see a flip date for a given date in French", async ({ page }) => {
         await page.goto(route);
         await page.getByRole("link", { name: "Poll" }).click();
         const trmnlFrame = page.frameLocator("iframe");
-        if (route === "/full") {
-          await expect
-            .soft(trmnlFrame.locator("div.fdp-dayofweek"))
-            .toHaveText("Vendredi");
-        }
+
+        await expect
+          .soft(trmnlFrame.locator("div.fdp-dayofweek"))
+          .toHaveText("Vendredi");
         await expect
           .soft(trmnlFrame.locator("div.fdp-number"))
           .toHaveText("20");
-        if (route !== "/quadrant") {
-          await expect
-            .soft(trmnlFrame.locator("div.fdp-month"))
-            .toHaveText("Fév");
-        }
+        await expect
+          .soft(trmnlFrame.locator("div.fdp-month"))
+          .toHaveText("Fév");
       });
     }
   } finally {

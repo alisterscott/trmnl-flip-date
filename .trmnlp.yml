@@ -7,6 +7,9 @@ watch:
 # Time zone IANA identifier to inject into trmnl.user; see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 time_zone: Australia/Brisbane
 
+custom_fields:
+  size: "compact"
+
 override variables:
 variables:
   trmnl:
