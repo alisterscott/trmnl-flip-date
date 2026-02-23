@@ -4,6 +4,8 @@ A retro inspired flip date clock, with internationalisation support. Built for t
 
 ![screenshot](./media/screen.png)
 
+![screenshot of screen in Korean](./media/screenshotko.png)
+
 ## Setup
 
 1. `brew install rbenv`
