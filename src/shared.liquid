@@ -81,6 +81,7 @@
 {%- assign locale_months_arr = locale_months | split: "|" -%}
 {%- assign day_of_week = locale_days_arr[dow_index] -%}
 {%- assign month = locale_months_arr[month_index] -%}
+{%- assign size = trmnl.plugin_settings.custom_fields_values.size | default: "standard" | downcase -%}
 
 
 <style>
@@ -130,6 +131,10 @@
 
   .fdp-text--sm {
     font-size: clamp(1rem, 9vw, 6rem);
+  }
+
+  .fdp-text--xs {
+    font-size: clamp(0.75rem, 6vw, 4.5rem);
   }
 
   /* Equal-height rows for stacked grid layouts */
