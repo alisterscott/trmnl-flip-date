@@ -2,7 +2,7 @@
 strategy: static
 no_screen_padding: 'no'
 dark_mode: 'no'
-static_data: 
+static_data: ''
 polling_verb: get
 polling_url: ''
 polling_headers: ''
@@ -41,7 +41,7 @@ custom_fields:
 - keyname: size
   field_type: select
   name: How to display the clock
-  description: Can be standard or compact. Compact is good for larger devices where you are only displaying on a part of the screen.
+  description: Can be standard or compact. Compact is good for larger devices where you are only displaying on part of the screen.
   options:
   - Standard
   - Compact
