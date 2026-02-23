@@ -1,50 +1,50 @@
 ---
 strategy: static
-no_screen_padding: 'no'
-dark_mode: 'no'
-static_data: ''
+no_screen_padding: "no"
+dark_mode: "no"
+static_data:
 polling_verb: get
-polling_url: ''
-polling_headers: ''
-polling_body: ''
+polling_url: ""
+polling_headers: ""
+polling_body: ""
 id: 247379
 custom_fields:
-- keyname: author_bio
-  field_type: author_bio
-  name: International Flip Date Clock by Alister Scott
-  description: Retro inspired flip date clock, with internationalisation support.
-  description-da: Retro-inspireret flip-dato ur, med internationaliseringsstøtte.
-  description-de: Retro-inspirierte Flip-Datumsuhr mit Unterstützung für Internationalisierung.
-  description-de-AT: Retro-inspirierte Flip-Datumsuhr mit Unterstützung für Internationalisierung.
-  description-en-GB: Retro inspired flip date clock, with internationalisation support.
-  description-en: Retro inspired flip date clock, with internationalisation support.
-  description-es-ES: Reloj de fecha de flip inspirado en lo retro, con soporte de internacionalización.
-  description-fr: Horloge de date à bascule inspirée du rétro, avec prise en charge de l'internationalisation.
-  description-he: שעון תאריך פליפ בהשראת רטרו, עם תמיכה באינטרנציונליזציה.
-  description-hu: Retro ihlette flip dátum óra, nemzetközivé tás támogatással.
-  description-id: Jam tanggal flip yang terinspirasi retro, dengan dukungan internasionalisasi.
-  description-is: Retro innblásinn flip dagsetning klukka, með stuðningi við alþjóðavæðingu.
-  description-ko: 레트로에서 영감을 받은 플립 날짜 시계로 국제화 지원이 가능합니다.
-  description-it: Orologio flip date ispirato al retro, con supporto per l'internazionalizzazione.
-  description-ja: レトロ風のフリップ日付時計で、国際化をサポートしています。
-  description-nl: Retro geïnspireerde flip datum klok, met ondersteuning voor internationalisatie.
-  description-pl: Zegarek z datą flip inspirowany retro, z obsługą internacjonalizacji.
-  description-pt-BR: Relógio de data flip inspirado no retrô, com suporte à internacionalização.
-  description-ru: Ретро вдохновленные флип-дата часы с поддержкой интернационализации.
-  description-sk: Retro inspirované flip datum hodiny, s podporou internacionalizace.
-  description-sv: Retro inspirerad flip datum klocka, med internationell support.
-  description-uk: Ретро вдохновленные флип-дата часы с поддержкой интернационализации.
-  description-zh-CN: 复古风格的翻转日期时钟，支持国际化。
-  description-zh-HK: 复古风格的翻转日期时钟，支持国际化。
-  category: life,productivity
-  github_url: https://github.com/alisterscott/trmnl-flip-date
-- keyname: size
-  field_type: select
-  name: How to display the clock
-  description: Can be standard or compact. Compact is good for larger devices where you are only displaying on part of the screen.
-  options:
-  - Standard
-  - Compact
-  default: standard
+  - keyname: author_bio
+    field_type: author_bio
+    name: International Flip Date Clock by Alister Scott
+    description: Retro inspired flip date clock, with internationalisation support.
+    description-da: Retro-inspireret flip-dato ur, med internationaliseringsstøtte.
+    description-de: Retro-inspirierte Flip-Datumsuhr mit Unterstützung für Internationalisierung.
+    description-de-AT: Retro-inspirierte Flip-Datumsuhr mit Unterstützung für Internationalisierung.
+    description-en-GB: Retro inspired flip date clock, with internationalisation support.
+    description-en: Retro inspired flip date clock, with internationalisation support.
+    description-es-ES: Reloj de fecha de flip inspirado en lo retro, con soporte de internacionalización.
+    description-fr: Horloge de date à bascule inspirée du rétro, avec prise en charge de l'internationalisation.
+    description-he: שעון תאריך פליפ בהשראת רטרו, עם תמיכה באינטרנציונליזציה.
+    description-hu: Retro ihlette flip dátum óra, nemzetközivé tás támogatással.
+    description-id: Jam tanggal flip yang terinspirasi retro, dengan dukungan internasionalisasi.
+    description-is: Retro innblásinn flip dagsetning klukka, með stuðningi við alþjóðavæðingu.
+    description-ko: 레트로에서 영감을 받은 플립 날짜 시계로 국제화 지원이 가능합니다.
+    description-it: Orologio flip date ispirato al retro, con supporto per l'internazionalizzazione.
+    description-ja: レトロ風のフリップ日付時計で、国際化をサポートしています。
+    description-nl: Retro geïnspireerde flip datum klok, met ondersteuning voor internationalisatie.
+    description-pl: Zegarek z datą flip inspirowany retro, z obsługą internacjonalizacji.
+    description-pt-BR: Relógio de data flip inspirado no retrô, com suporte à internacionalização.
+    description-ru: Ретро вдохновленные флип-дата часы с поддержкой интернационализации.
+    description-sk: Retro inspirované flip datum hodiny, s podporou internacionalizace.
+    description-sv: Retro inspirerad flip datum klocka, med internationell support.
+    description-uk: Ретро вдохновленные флип-дата часы с поддержкой интернационализации.
+    description-zh-CN: 复古风格的翻转日期时钟，支持国际化。
+    description-zh-HK: 复古风格的翻转日期时钟，支持国际化。
+    category: life,productivity
+    github_url: https://github.com/alisterscott/trmnl-flip-date
+  - keyname: size
+    field_type: select
+    name: How to display the clock
+    description: Can be standard or compact. Compact is good for larger devices where you are only displaying on part of the screen.
+    options:
+      - Standard
+      - Compact
+    default: standard
 name: International Flip Date Clock
 refresh_interval: 30
