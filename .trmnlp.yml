@@ -8,7 +8,7 @@ watch:
 time_zone: Australia/Brisbane
 
 custom_fields:
-  size: "compact"
+  size: "standard"
 
 override variables:
 variables:
