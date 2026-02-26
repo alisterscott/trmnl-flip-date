@@ -1,8 +1,9 @@
 {% if testing_date and testing_date != '' %}
     {%- assign todays_date = testing_date -%}
 {% else %}
-    {%- assign todays_date = trmnl.system.timestamp_utc | date: "%Y-%m-%d" -%}
+    {%- assign todays_date = "now" -%}
 {% endif %}
+
 {%- assign today_timestamp = todays_date | date: "%s" | plus: trmnl.user.utc_offset -%}
 {%- assign today_date = today_timestamp | date: "%Y-%m-%d" -%}
 {%- assign day_of_month = today_timestamp | date: "%d" -%}
