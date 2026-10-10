@@ -27,3 +27,9 @@ A retro inspired flip date clock, with internationalisation support. Built for t
 
 1. Update `gem 'trmnl_preview', '0.11.0'` in `Gemfile`
 2. `bundler install`
+
+## Running tests
+
+1. `npx playwright test`
+
+The compact quadrant test also renders the preview at 400×240 pixels (one quadrant of the 800×480 TRMNL OG) and saves `test-results/compact-quadrant-400x240.png` for visual comparison.
