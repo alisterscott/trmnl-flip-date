@@ -92,6 +92,9 @@
     font-weight: 800;
     overflow: hidden;
     position: relative;
+    min-width: 0;
+    min-height: 0;
+    white-space: nowrap;
   }
 
   /* Seam effect (like flip clock seam) */
@@ -146,18 +149,84 @@
     font-size: clamp(0.75rem, 6vw, 4.5rem);
   }
 
-  .fdp-compact-quadrant .fdp-dayofweek {
-    font-size: min(22vh, 13vw);
-  }
-
-  .fdp-compact-quadrant .fdp-number,
-  .fdp-compact-quadrant .fdp-month {
-    font-size: min(30vh, 18vw);
-  }
-
   /* Equal-height rows for stacked grid layouts */
   .fdp-equal-rows {
     grid-template-rows: 1fr 1fr;
     grid-auto-rows: 1fr;
   }
 </style>
+
+<script>
+  (() => {
+    const fitTileText = (tile) => {
+      const text = tile.textContent.trim();
+      if (!text) {
+        return;
+      }
+
+      const styles = getComputedStyle(tile);
+      const availableWidth =
+        tile.clientWidth -
+        parseFloat(styles.paddingLeft) -
+        parseFloat(styles.paddingRight);
+      const availableHeight =
+        tile.clientHeight -
+        parseFloat(styles.paddingTop) -
+        parseFloat(styles.paddingBottom);
+      if (availableWidth <= 0 || availableHeight <= 0) {
+        return;
+      }
+
+      const range = document.createRange();
+      range.selectNodeContents(tile);
+      const fits = () => {
+        const textBounds = range.getBoundingClientRect();
+        return (
+          textBounds.width <= availableWidth &&
+          textBounds.height <= availableHeight
+        );
+      };
+
+      let low = 0;
+      let high = Math.max(availableWidth, availableHeight) * 2;
+      for (let i = 0; i < 20; i += 1) {
+        const size = (low + high) / 2;
+        tile.style.fontSize = `${size}px`;
+        if (fits()) {
+          low = size;
+        } else {
+          high = size;
+        }
+      }
+
+      tile.style.fontSize = `${Math.max(low - 0.5, 0.5)}px`;
+    };
+
+    const fitAllTileText = () => {
+      document.querySelectorAll(".fdp-tile").forEach(fitTileText);
+    };
+
+    const initialize = () => {
+      const tiles = document.querySelectorAll(".fdp-tile");
+      if (!tiles.length) {
+        return;
+      }
+
+      fitAllTileText();
+      if ("ResizeObserver" in window) {
+        const observer = new ResizeObserver(fitAllTileText);
+        tiles.forEach((tile) => observer.observe(tile));
+      }
+      window.addEventListener("resize", fitAllTileText);
+      if (document.fonts?.ready) {
+        document.fonts.ready.then(fitAllTileText);
+      }
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initialize, { once: true });
+    } else {
+      initialize();
+    }
+  })();
+</script>
