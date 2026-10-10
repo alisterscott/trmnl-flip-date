@@ -87,7 +87,7 @@ test("can see a standard sized flip date for a given date in English", async ({
     for (const route of routes) {
       await test.step(`Testing route: ${route}`, async () => {
         await page.goto(route);
-        await page.getByRole("combobox").nth(2).selectOption({ label: "HTML" });
+        await page.locator("select.select-format").selectOption("html");
         await page.getByRole("link", { name: "Poll" }).click();
         const trmnlFrame = page.frameLocator("iframe");
         for (const size of previewSizes) {
@@ -137,7 +137,7 @@ test("can see a compact flip date for a given date in French", async ({
     for (const route of routes) {
       await test.step(`Testing route: ${route}`, async () => {
         await page.goto(route);
-        await page.getByRole("combobox").nth(2).selectOption({ label: "HTML" });
+        await page.locator("select.select-format").selectOption("html");
         await page.getByRole("link", { name: "Poll" }).click();
         const trmnlFrame = page.frameLocator("iframe");
 
