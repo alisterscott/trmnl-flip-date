@@ -22,3 +22,8 @@ A retro inspired flip date clock, with internationalisation support. Built for t
 
 1. `trmnlp login`
 2. `trmnlp push`
+
+## Updating TRMNL
+
+1. Update `gem 'trmnl_preview', '0.11.0'` in `Gemfile`
+2. `bundler install`
